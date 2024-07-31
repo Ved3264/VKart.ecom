@@ -4,6 +4,9 @@ from category.models import Category
 from carts.models import CartItem
 from carts.views import _cart_id
 from django.http import HttpResponse
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+
+
 def store(request,category_slug=None):
       categories=None
       products=None
@@ -11,12 +14,18 @@ def store(request,category_slug=None):
       if category_slug!=None:
             categories = get_object_or_404(Category,slug=category_slug)
             product_store= Product.objects.all().filter(category=categories,is_available=True)
+            paginator = Paginator(product_store,6)
+            page = request.GET.get('page')
+            paged_products = paginator.get_page(page)
             product_count = product_store.count()
       else:
            product_store  = Product.objects.all().filter(is_available=True)
+           paginator = Paginator(product_store,6)
+           page = request.GET.get('page')
+           paged_products = paginator.get_page(page)
            product_count = product_store.count()
       context={
-            'product_store':product_store,
+            'product_store':paged_products,
             'product_count':product_count,
       }
       return render(request,'stores/store.html',context)
