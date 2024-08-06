@@ -18,6 +18,7 @@ pipeline{
                               echo "start build app"
                               sh 'docker build -t ved1111/django-app-practise:1.1 .'
                               sh "echo $PASS | docker login -u $USER --password-stdin"
+                              sh 'docker push ved1111/django-app-practise:1.1'
                               echo 'build successfully'
                         }
                   }
@@ -30,7 +31,6 @@ pipeline{
                         }
                   }
                   steps{
-                        sh 'docker push ved1111/django-app-practise:1.1'
                         echo 'deploy successfully'
                   }
             }
