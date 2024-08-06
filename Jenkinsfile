@@ -14,10 +14,12 @@ pipeline{
                         }
                   }
                   steps{
-                        echo "start build app"
-                        sh 'docker build -t ved1111/docker-practise:1.0 .'
-                        sh "echo $PASS | docker login -u $USER --password-stdin"
-                        echo 'build successfully'
+                        withCredentials([usernamePassword(credentialsId: 'Ved-DockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+                              echo "start build app"
+                              sh 'docker build -t ved1111/django-app-practise:1.1 .'
+                              sh "echo $PASS | docker login -u $USER --password-stdin"
+                              echo 'build successfully'
+                        }
                   }
             }
             stage("deploy")
@@ -28,7 +30,7 @@ pipeline{
                         }
                   }
                   steps{
-                        sh 'docker push ved1111/docker-practise:1.0'
+                        sh 'docker push ved1111/django-app-practise:1.1'
                         echo 'deploy successfully'
                   }
             }
