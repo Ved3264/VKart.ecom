@@ -8,11 +8,6 @@ pipeline{
             }
             stage("build")
             {
-                  when{
-                        expression{
-                              BRANCH_NAME=='master'
-                        }
-                  }
                   steps{
                         withCredentials([usernamePassword(credentialsId: 'Ved-DockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
                               echo "start build app"
@@ -25,11 +20,6 @@ pipeline{
             }
             stage("deploy")
             {
-                  when{
-                        expression{
-                              BRANCH_NAME=='master'
-                        }
-                  }
                   steps{
                         echo 'deploy successfully'
                   }
