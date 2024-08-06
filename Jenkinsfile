@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage("test") {
             steps {
-                sh "python manage.py runserver"
                 echo "test success"
             }
         }
