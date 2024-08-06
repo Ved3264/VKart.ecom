@@ -1,28 +1,26 @@
-pipeline{
-      agent any
-      stages{
-            stage("test"){
-                  steps{
-                        echo "test appication success"
-                  }
+pipeline {
+    agent any
+    stages {
+        stage("test") {
+            steps {
+                echo "test application success"
             }
-            stage("build")
-            {
-                  steps{
-                        withCredentials([usernamePassword(credentialsId: 'Ved-DockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')]){
-                              echo "start build app"
-                              sh 'docker build -t ved1111/django-app-practise:1.1 .'
-                              sh "echo $PASS | docker login -u $USER --password-stdin"
-                              sh 'docker push ved1111/django-app-practise:1.1'
-                              echo 'build successfully'
-                        }
-                  }
+        }
+        stage("build") {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'Ved-DockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    echo "start build app"
+                    sh 'docker build -t ved1111/django-app-practise:1.1 .'
+                    sh 'docker login -u $USER -p $PASS'
+                    sh 'docker push ved1111/django-app-practise:1.1'
+                    echo 'build successfully'
+                }
             }
-            stage("deploy")
-            {
-                  steps{
-                        echo 'deploy successfully'
-                  }
+        }
+        stage("deploy") {
+            steps {
+                echo 'deploy successfully'
             }
-      }
+        }
+    }
 }
