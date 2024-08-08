@@ -12,9 +12,9 @@ pipeline {
         }
         stage("build and push image") {
             steps {
-                dockerImageBuild 'django-app-practise:1.3'
+                dockerImageBuild 'ved1111/django-app-practise:1.3'
                 dockerLogin()
-                dockerPush 'django-app-practise:1.3'
+                dockerPush 'ved1111/django-app-practise:1.3'
             }
         }
         stage("deploy") {
