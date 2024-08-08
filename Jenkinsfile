@@ -4,18 +4,10 @@
 
 pipeline {
     agent any
-    tools{
-        python 'python3'
-    }
     stages {
         stage("test") {
             steps {
                 echo "test success"
-            }
-        }
-        stage("build requirement"){
-            steps{
-                buildRequirement()
             }
         }
         stage("build and push image") {
