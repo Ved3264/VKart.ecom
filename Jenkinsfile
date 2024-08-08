@@ -12,9 +12,9 @@ pipeline {
         }
         stage("build and push image") {
             steps {
-                dockerImageBuild 'ved1111/django-vkart-app:1.0'
+                dockerImageBuild 'django-app-practise:1.3'
                 dockerLogin()
-                dockerPush 'ved1111/django-vkart-app:1.0'
+                dockerPush 'django-app-practise:1.3'
             }
         }
         stage("deploy") {
