@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
-@Library('Django-vkart-library')
+@Library('Django-vkart-library')_
+
 pipeline {
     agent any
     stages {
