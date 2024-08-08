@@ -1,3 +1,6 @@
+#!/usr/bin/env groovy
+
+@Library('Django-vkart-library')
 pipeline {
     agent any
     stages {
@@ -6,15 +9,16 @@ pipeline {
                 echo "test success"
             }
         }
-        stage("build") {
+        stage("build requirement"){
+            steps{
+                buildRequirement()
+            }
+        }
+        stage("build and push image") {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Ved-DockerHub', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    echo "start build app"
-                    sh 'docker build -t ved1111/django-app-practise:1.3 .'
-                    sh 'echo "$PASS" | docker login -u "$USER" --password-stdin'
-                    sh 'docker push ved1111/django-app-practise:1.3'
-                    echo 'build successfully'
-                }
+                dockerImageBuild 'ved1111/django-vkart-app:1.0'
+                dockerLogin()
+                dockerPush 'ved1111/django-vkart-app:1.0'
             }
         }
         stage("deploy") {
