@@ -7,31 +7,33 @@ pipeline {
     stages {
         stage("versioning") {
             steps {
-                def dockerImage = "ved1111/django-app-practise"
-                def currentVersion = "1.0.0" // You can fetch this from a file, environment variable, etc.
+                script {
+                    def dockerImage = "ved1111/django-app-practise"
+                    def currentVersion = "1.0.0" // You can fetch this from a file, environment variable, etc.
 
-                // Split the version into major, minor, and patch parts
-                def versionParts = currentVersion.tokenize('.')
-                def major = versionParts[0].toInteger()
-                def minor = versionParts[1].toInteger()
-                def patch = versionParts[2].toInteger()
+                    // Split the version into major, minor, and patch parts
+                    def versionParts = currentVersion.tokenize('.')
+                    def major = versionParts[0].toInteger()
+                    def minor = versionParts[1].toInteger()
+                    def patch = versionParts[2].toInteger()
 
-                // Increment the patch version
-                patch += 1
+                    // Increment the patch version
+                    patch += 1
 
-                // Create the new version
-                def newVersion = "${major}.${minor}.${patch}"
+                    // Create the new version
+                    def newVersion = "${major}.${minor}.${patch}"
 
-                // Build and tag the new Docker image
-                def newImageTag = "${dockerImage}:${newVersion}"
-                echo "Building Docker image: ${newImageTag}"
-                
-                // Push the new Docker image
-                echo "Pushing Docker image: ${newImageTag}"
-                
+                    // Build and tag the new Docker image
+                    def newImageTag = "${dockerImage}:${newVersion}"
+                    echo "Building Docker image: ${newImageTag}"
+                    
+                    // Push the new Docker image
+                    echo "Pushing Docker image: ${newImageTag}"
+                    
 
-                // Optionally, update the version in a file or environment variable
-                echo "Updated version to: ${newVersion}"
+                    // Optionally, update the version in a file or environment variable
+                    echo "Updated version to: ${newVersion}"
+                }
             }
         }
         stage("test") {
