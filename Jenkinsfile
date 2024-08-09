@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage("versioning") {
             steps {
-                def currentVersion = new File('version.txt').text.trim()
+                def versionFile = new File('version.txt')
+                def currentVersion = versionFile.text.trim()
 
                 if (!currentVersion) {
                     throw new RuntimeException("Current version is not available")
