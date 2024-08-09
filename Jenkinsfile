@@ -8,9 +8,9 @@ pipeline {
         stage("versioning") {
             steps {
                 script {
+                    echo 'start versioning'
                     def dockerImage = "ved1111/django-app-practise"
-                    def currentVersion = "1.0.0" // You can fetch this from a file, environment variable, etc.
-
+                    def currentVersion = "1.0.0"
                     // Split the version into major, minor, and patch parts
                     def versionParts = currentVersion.tokenize('.')
                     def major = versionParts[0].toInteger()
@@ -33,6 +33,7 @@ pipeline {
 
                     // Optionally, update the version in a file or environment variable
                     echo "Updated version to: ${newVersion}"
+                    echo'end versionning
                 }
             }
         }
