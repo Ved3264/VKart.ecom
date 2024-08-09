@@ -22,7 +22,7 @@ pipeline {
                 def newVersion = "${major}.${minor}.${patch}"
                 // Optionally, update the version in the file
                 new File('version.txt').text = newVersion
-                println "Updated version to: ${newVersion} in file"
+                echo "Updated version to: ${newVersion} in file"
             }
         }
         stage("test") {
