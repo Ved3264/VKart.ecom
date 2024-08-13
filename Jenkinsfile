@@ -44,8 +44,8 @@ pipeline {
             }
         }
         stage("deploy") {
-            script{
-                    steps {
+            steps {
+                script{
                     def dockerCMd="docker run -p 8000:8000 -d ${env.IMG_TAG}"
                     sshagent(['ec2-shh-key']){
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.86.92.138 ${dockerCMd}"
