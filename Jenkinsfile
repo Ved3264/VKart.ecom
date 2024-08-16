@@ -14,10 +14,8 @@ pipeline {
         }
         stage("build and push image") {
             steps {
-                echo "Building Docker image: ${env.IMG_TAG}"
                 dockerImageBuild("${env.IMG_TAG}")
                 dockerLogin()
-                echo "Pushing Docker image: ${env.IMG_TAG}"
                 dockerPush("${env.IMG_TAG}")
             }
         }
